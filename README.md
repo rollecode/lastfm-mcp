@@ -161,6 +161,37 @@ claude mcp add lastfm -- /path/to/lastfm-mcp/.venv/bin/lastfm-mcp
 
 Run `start_authentication`, open the URL it returns, approve, then run `finish_authentication` with the same token. The session key lands in `~/.cache/lastfm-mcp/session.json` with mode 600 and does not expire.
 
+## Hosting it
+
+Running it over HTTP puts it in reach of Claude.ai as a custom connector, and of Claude Code on other machines. Three tiers, the same shape the other servers in this family use:
+
+| Tier | Port | What it does |
+| --- | --- | --- |
+| `lastfm-mcp` | 8500 | The server. No login of its own, never exposed |
+| nginx | 8501 | Front door, behind a Cloudflare Tunnel |
+| `auth-server.js` | 8502 | OAuth 2.1 sign-in, or a fixed bearer token |
+
+```bash
+npm install
+node set-password.js 'a password for the sign-in page'
+printf 'LASTFM_API_KEY=...\n' > ~/.config/lastfm-mcp/env
+chmod 600 ~/.config/lastfm-mcp/env
+```
+
+Copy `systemd/*.service` into `/etc/systemd/system/`, replacing `YOUR_USER` and the `ISSUER` hostname, then:
+
+```bash
+sudo systemctl enable --now lastfm-mcp lastfm-mcp-auth
+```
+
+Point `nginx/lastfm-mcp.conf` at your own hostname and send the tunnel at `127.0.0.1:8501`.
+
+Environment the server itself reads: `LASTFM_API_KEY, LASTFM_API_SECRET, LASTFM_USERNAME`. The sign-in page carries the Last.fm mark and accent colour, set through `APP_NAME`, `APP_ACCENT` and `APP_BLURB` in the auth unit.
+
+### Claude.ai
+
+Settings, Connectors, Add custom connector, URL `https://lastfm-mcp.your-domain/mcp`, client ID and secret blank. The sign-in page asks for the password set above. Connectors belong to the account, so adding it once covers mobile too.
+
 ## Development
 
 ```bash
