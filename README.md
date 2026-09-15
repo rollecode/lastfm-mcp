@@ -5,7 +5,7 @@
 Last.fm MCP server
 
 <img style="justify-content:center;text-align: center;width: 95px; height: auto;" width="793" height="411" alt="image" src="https://github.com/user-attachments/assets/abed1a04-d69b-4ab4-a490-d606064df72d" />
-<img style="justify-content:center;text-align: center;width: 194px; height: auto;" alt="Last.fm" src="public/logo.png" />
+<img style="justify-content:center;text-align: center;width: 194px; height: auto;" alt="Last.fm" src="https://github.com/user-attachments/assets/139ba888-5f87-4ab5-b16e-ae09f0430d0c" />
 
 </h1>
 
