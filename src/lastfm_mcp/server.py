@@ -8,6 +8,7 @@ import os
 from mcp.server.fastmcp import FastMCP
 from mcp.types import Icon
 
+from . import paging
 from .client import LastfmClient, LastfmError
 
 logging.basicConfig(level=logging.INFO)
@@ -55,6 +56,7 @@ mcp = FastMCP(
 )
 
 mcp._mcp_server.version = __version__
+paging.register(mcp)
 
 _READ = {
     "readOnlyHint": True,
@@ -81,7 +83,7 @@ def _get_client() -> LastfmClient:
 
 
 def _ok(data: dict) -> str:
-    return json.dumps({"status": "success", **data}, indent=2)
+    return paging.fit({"status": "success", **data})
 
 
 def _err(e: Exception) -> str:
