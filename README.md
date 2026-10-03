@@ -21,6 +21,9 @@ Read and write Last.fm from Claude.ai and Claude Code. Every documented method o
 
 <hr>
 
+> [!WARNING]
+> Using this server with a paid AI service costs money. Tool definitions and results are billed as input tokens, and an agent can call tools repeatedly on its own. You are responsible for every charge, so set spending limits with your provider. The author accepts no liability for any costs. See [DISCLAIMER.md](DISCLAIMER.md).
+
 ## Why not the other options
 
 * `kud/mcp-lastfm` covers 41 of the 44 read methods and none of the writes, so it cannot scrobble, love or tag
